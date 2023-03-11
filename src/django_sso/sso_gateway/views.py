@@ -40,6 +40,8 @@ class LoginView(django.contrib.auth.views.LoginView):
 			).first()
 
 		if not auth_request or not auth_request.next_url:
+			if 'next' in self.request.POST:
+				return self.request.POST['next'][0]
 			return reverse_lazy('welcome')
 
 		try:
