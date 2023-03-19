@@ -4,6 +4,7 @@ from builtins import super
 from typing import Optional
 
 import django.contrib.auth.views
+from django.conf import settings
 from django.contrib.auth import logout, get_user_model
 from django.http import JsonResponse
 from django.shortcuts import redirect
@@ -42,7 +43,7 @@ class LoginView(django.contrib.auth.views.LoginView):
 		if not auth_request or not auth_request.next_url:
 			if 'next' in self.request.POST:
 				return self.request.POST['next'][0]
-			return reverse_lazy('welcome')
+			return reverse_lazy(settings.LOGIN_REDIRECT_URL)
 
 		try:
 			auth_request.activate(self.request.user)
